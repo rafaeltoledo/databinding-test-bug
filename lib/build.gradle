@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    sourceSets {
+        final commonTest = 'src/commonTest/java'
+
+        test.java.srcDirs += commonTest
+        androidTest.java.srcDirs += commonTest
+    }
+
+    dataBinding.enabled true
+
+    testOptions.unitTests.includeAndroidResources true
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+
+    testImplementation 'androidx.test:runner:1.1.1'
+    testImplementation 'androidx.test.ext:junit:1.1.0'
+    testImplementation 'androidx.test:core:1.1.0'
+    testImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    testImplementation 'org.robolectric:robolectric:4.2'
+
+    // Doesn't fix class generation for tests :(
+    kaptTest 'androidx.databinding:databinding-compiler:3.3.2'
+
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test:core:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // Fixes class generation for Android tests
+    kaptAndroidTest 'androidx.databinding:databinding-compiler:3.3.2'
+}
+
